@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+    <style>
+     #container{
+        display:grid;
+       grid-template-columns:repeat(4,1fr);
+     }
+      img{
+        width: 30%;
+        height: 150px;
+        border-radius: 5%;
+      }
+
+       
+    </style>
+
+
+</head>
+<body> 
+
+    <main id="main">
+      <section id="sub_main">
+        <span>online shopping</span>
+        <ol>
+          <li>filter:<input  oninput="filter()" type="text" id="query"/></li>
+          <li><button  onclick="sortLH()">sortLH</button></li>
+          <li><button  onclick="sortHL()">sortHL</button></li>
+        
+        </ol>
+      </section>
+   </main>
+    
+    <div id="container"></div>
+
+
+
+    
+<script src="./index.js"></script>
+</body>
+</html>
