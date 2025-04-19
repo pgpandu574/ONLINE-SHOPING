@@ -107,6 +107,31 @@
       font-size: 16px;
       color: #333;
     }
+         /* Extra small devices */
+@media (max-width: 480px) {
+  #container {
+    grid-template-columns: repeat(2, 1fr); /* Show two items per row */
+  }
+
+  #main {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #main ol {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #main ol li {
+    font-size: 14px;
+  }
+
+  #main ol input,
+  #main ol button {
+    width: 100%;
+  }
+}
 
     /* Responsive for Tablets */
     @media (max-width: 1024px) {
