@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Online Shopping</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #fff;
+    }
+
+    #main {
+      height: 70px;
+      background-color: violet;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    #main span {
+      font-weight: bold;
+      font-size: 20px;
+      color: #fff;
+    }
+
+    #main ol {
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      align-items: center;
+    }
+
+    #main ol li {
+      color: #fff;
+      font-size: 16px;
+    }
+
+    #main ol input {
+      padding: 6px;
+      font-size: 16px;
+    }
+
+    #main ol button {
+      padding: 8px 16px;
+      background: linear-gradient(144deg,#AF40FF, #5B42F3 50%,#00DDEB);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    #main ol button:hover {
+      transform: scale(1.05);
+    }
+
+    #container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr); /* exactly 5 columns */
+      gap: 20px;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+
+    #container div {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      text-align: center;
+      transition: transform 0.5s ease, box-shadow 0.5s ease;
+      cursor: pointer;
+    }
+
+    #container div:hover {
+      transform: rotateY(10deg) scale(1.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    #container img {
+      width: 100%;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 10px;
+      transition: transform 0.5s;
+    }
+
+    #container img:hover {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    #container p {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <main id="main">
+    <span>online shopping</span>
+    <ol>
+      <li>Filter: <input type="text" id="query" oninput="filter()"/></li>
+      <li><button onclick="sortLH()">sortLH</button></li>
+      <li><button onclick="sortHL()">sortHL</button></li>
+    </ol>
+  </main>
+
+  <div id="container"></div>
+
+  <script>
+    let container = document.getElementById('container');
+    let data = [];
+
+    async function getData() {
+      try {
+        let res = await fetch('https://fakestoreapi.com/products');
+        data = await res.json();
+        appendProducts(data);
+      } catch (err) {
+        console.log('err:', err);
+      }
+    }
+
+    getData();
+
+    function appendProducts(dataArray) {
+      container.innerHTML = null;
+      dataArray.forEach(function (el) {
+        let div = document.createElement('div');
+        let img = document.createElement('img');
+        img.src = el.image;
+        let title = document.createElement('p');
+        title.innerText = el.title;
+        let price = document.createElement('p');
+        price.innerText = el.price;
+        div.append(img, title, price);
+        container.append(div);
+      });
+    }
+
+    function sortLH() {
+      let sorted = [...data].sort((a, b) => a.price - b.price);
+      appendProducts(sorted);
+    }
+
+    function sortHL() {
+      let sorted = [...data].sort((a, b) => b.price - a.price);
+      appendProducts(sorted);
+    }
+
+    function filter() {
+      let query = document.getElementById('query').value.toLowerCase();
+      let filtered = data.filter(el =>
+        el.title.toLowerCase().includes(query)
+      );
+      appendProducts(filtered);
+    }
+  </script>
+</body>
+</html>
